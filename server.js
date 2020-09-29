@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const loginRoute = require("./routes/login");
 const userRoute = require("./routes/user");
+const articleRouter = require("./routes/article");
 dotenv.config();
 
 mongoose.connect(
@@ -21,6 +22,7 @@ mongoose.connect(
 app.use(express.json());
 app.use("/api/login", loginRoute);
 app.use("/api/user", userRoute);
+app.use("/api/articles", articleRouter);
 
 app.listen(3000, () => {
   console.log("server running");

@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const bcrypt = require("bcryptjs");
-const User = require("../model/user");
+const User = require("../models/user");
 const jwt = require("jsonwebtoken"); 
 
 router.post("/register", async (req, res) => {
@@ -27,7 +27,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.post("/login", async (req, res) => {
+router.post("/", async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
   if (!user) {
     return res.status(400).send("email doesnot exists");
