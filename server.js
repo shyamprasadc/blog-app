@@ -20,9 +20,9 @@ mongoose.connect(
 );
 
 app.use(express.json());
-app.use("/api/login", loginRoute);
-app.use("/api/user", userRoute);
-app.use("/api/articles", articleRouter);
+app.use("/api/login/", loginRoute);
+app.use("/api/user/", userRoute);
+app.use("/api/articles/", articleRouter);
 
 app.listen(3000, () => {
   console.log("server running");

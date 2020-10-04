@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const bcrypt = require("bcryptjs");
 const User = require("../models/user");
-const jwt = require("jsonwebtoken"); 
+const jwt = require("jsonwebtoken");
 
 router.post("/", async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
@@ -15,9 +15,7 @@ router.post("/", async (req, res) => {
   }
 
   const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
-  res.header('auth-token', token).send(token)
-
-  res.send("logged In");
+  res.header("auth-token", token).send({ token: token });
 });
 
 router.post("/register", async (req, res) => {
@@ -37,8 +35,8 @@ router.post("/register", async (req, res) => {
   });
 
   try {
-    const savedUser = await user.save();
-    res.send({ message:"user created", _id: savedUser._id });
+    await user.save();
+    res.send({ message: "user created successfully"});
   } catch (err) {
     res.status.apply(400).send(err);
   }
