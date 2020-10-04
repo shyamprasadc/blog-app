@@ -1,4 +1,5 @@
 const express = require("express");
+const verify = require("../controllers/auth");
 const Article = require("../models/article");
 const router = express.Router();
 
@@ -16,9 +17,9 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/new", async (req, res) => {
+router.post("/new", verify, async (req, res) => {
   const article = new Article({
-    userId: req.body.userId,
+    userId: req.user,
     title: req.body.title,
     description: req.body.description,
     markdown: req.body.markdown,
@@ -31,7 +32,7 @@ router.post("/new", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", verify, async (req, res) => {
   let article = await Article.findById(req.params.id);
   article.title = req.body.title;
   article.description = req.body.description;
@@ -44,7 +45,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", verify, async (req, res) => {
   try {
     await Article.findByIdAndDelete(req.params.id);
     res.json({ message: "article deleted" });
